@@ -1,0 +1,57 @@
+# 方法配置：冻结序列基座 + 语义先验驱动的潜环境状态适配。
+# 默认基础模型是 GRU；若要验证去耦合，可直接把 base_model.type 改成 lstm。
+name: roam_v1
+family: sequence_regression_adaptation
+backend: torch
+base_model:
+  type: gru
+  hidden_size: 8
+  num_layers: 1
+  dropout: 0.0
+training:
+  batch_size: 32
+  max_epochs: 300
+  learning_rate: 0.001
+  weight_decay: 0.0
+  device: auto
+  random_seed: 42
+  gradient_clip_norm: 1.0
+adaptation:
+  latent_state:
+    axes: [bias, scale, load, dynamics, readout]
+    update_space: subspace
+    prior_variance_min: 0.15
+    prior_variance_max: 1.5
+  adapter:
+    ridge_lambda: 0.001
+    latent_l2: 0.01
+    joint_fit_iterations: 3
+    synthetic_anchor_weight: 1.0
+    real_residual_weight: 2.0
+    observation_anchor_weight: 1.0
+    observation_real_weight: 1.0
+    process_anchor_weight: 1.0
+    process_real_weight: 1.0
+    nominal_summary_weight: 1.0
+    dynamics_slowdown_factor: 0.6
+    dynamics_speedup_factor: 1.4
+  observation_evidence:
+    enabled: true
+    observation_variance: 1.0
+    variance_floor: 0.25
+  process_evidence:
+    enabled: true
+    observation_variance: 1.2
+    variance_floor: 0.35
+  online:
+    label_observation_noise_variance: 0.0004
+    enable_trust_gate: true
+  support_geometry:
+    enable_risk_gate: true
+    gamma_uncertainty_scale_obs: 0.12
+    gamma_uncertainty_scale_proc: 0.12
+    gamma_support_scale_obs: 0.08
+    gamma_support_scale_proc: 0.08
+# 与具体任务量纲和监督节奏相关的默认项由各任务自己的 ROAM task adapter 提供。
+# 大模型配置单独放在 llm.yaml；若存在 llm.local.yaml，脚本会优先读取本地文件。
+prior_engine: configs/llm.yaml

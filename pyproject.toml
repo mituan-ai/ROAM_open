@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "roam"
+version = "0.1.0"
+description = "Open-ended scenario reasoning for specialist model adaptation"
+readme = "README_EN.md"
+requires-python = ">=3.14"
+license = { text = "MIT" }
+authors = [
+  { name = "Zong Youcheng", email = "youchengzong@stumail.neu.edu.cn" },
+]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+  "numpy",
+  "torch",
+  "scikit-learn",
+  "xgboost",
+  "transformers",
+  "openai",
+  "fvcore",
+  "psutil",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "matplotlib",
+]
+
+[project.urls]
+Homepage = "https://github.com/917940234/ROAM_open"
+Repository = "https://github.com/917940234/ROAM_open"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+markers = [
+  "live: tests that perform real external LLM calls",
+]
