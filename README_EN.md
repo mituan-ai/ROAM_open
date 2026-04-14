@@ -37,8 +37,8 @@
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    Open Evidence                         │
-│  (operator notes, maintenance, upstream, external)       │
+│                    Open Evidence                        │
+│  (operator notes, maintenance, upstream, external)      │
 └──────────────────────┬──────────────────────────────────┘
                        ▼
               ┌────────────────┐
@@ -47,7 +47,7 @@
               └───────┬────────┘
                       ▼
 ┌──────────────────────────────────────────────────────────┐
-│              Frozen Specialist Backbone                   │
+│              Frozen Specialist Backbone                  │
 │         (GRU / LSTM / Transformer / ...)                 │
 │                      +                                   │
 │         Low-Capacity Latent Corrector                    │
